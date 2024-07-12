@@ -92,11 +92,13 @@ p:not(:last-child) {
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
   z-index: 1;
-  transition: height 0.5s ease;
+  opacity: 0;
+  transition: opacity 0.5s ease;
 }
 
 .overlay.open {
   height: 100dvh;
+  opacity: 1;
 }
 
 .btn-link {
@@ -135,6 +137,10 @@ p:not(:last-child) {
   border: none;
   display: grid;
   place-items: center;
+}
+
+.btn-square * {
+  pointer-events: none;
 }
 
 .btn-square:hover {
@@ -252,15 +258,43 @@ p:not(:last-child) {
 }
 
 /* ========== HERO ========== */
+.hero {
+  overflow: hidden;
+}
+
 .hero__image {
+  overflow: hidden;
+}
+
+.hero__content {
   position: relative;
 }
 
 .hero__controls {
   position: absolute;
+  top: 0;
   right: 0;
-  bottom: 0;
+  transform: translateY(-100%);
   display: flex;
+}
+
+.hero__image>img,
+.hero__content-title,
+.hero__content-text,
+.hero__content-link {
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.animate .hero__image>img {
+  transform: scale(1.1);
+  opacity: 0;
+}
+
+.animate .hero__content-title,
+.animate .hero__content-text,
+.animate .hero__content-link {
+  transform: translateX(50px);
+  opacity: 0;
 }
 
 @media (min-width: 768px) {
@@ -276,7 +310,10 @@ p:not(:last-child) {
   }
 
   .hero__controls {
-    transform: translateX(100%);
+    top: unset;
+    left: 0;
+    bottom: 0;
+    transform: translateY(0);
   }
 
   .hero__content {
